@@ -1,7 +1,9 @@
-package com.example.bazaarkari;
+package com.example.bazaarkari.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bazaarkari.R;
 
 public class MainActivity extends AppCompatActivity {
 
