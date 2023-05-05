@@ -11,6 +11,8 @@ import com.example.bazaarkari.databinding.ActivityMainBinding;
 import com.example.bazaarkari.model.Category;
 import com.example.bazaarkari.model.Product;
 
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         initCategory();
         initProducts();
+        initSlider();
 
 
     }
@@ -49,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this,4);
         binding.categoriesList.setLayoutManager(layoutManager);
         binding.categoriesList.setAdapter(categoryAdapter);
+    }
+
+    void initSlider() {
+        binding.carousel.addData(new CarouselItem("https://tutorials.mianasad.com/ecommerce/uploads/news/mens%20offers.jpg","sales offer for men"));
+        binding.carousel.addData(new CarouselItem("https://tutorials.mianasad.com/ecommerce/uploads/news/summer%20sales%20offer.jpg","summer season"));
+        binding.carousel.addData(new CarouselItem("https://tutorials.mianasad.com/ecommerce/uploads/news/summer%20sales%20offer.jpg","summer season"));
     }
 
     void initProducts(){
