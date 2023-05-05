@@ -1,17 +1,27 @@
 package com.example.bazaarkari.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.bazaarkari.adapters.CategoryAdapter;
 import com.example.bazaarkari.adapters.ProductAdapter;
 import com.example.bazaarkari.databinding.ActivityMainBinding;
 import com.example.bazaarkari.model.Category;
 import com.example.bazaarkari.model.Product;
+import com.example.bazaarkari.utils.Constants;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -39,48 +49,117 @@ public class MainActivity extends AppCompatActivity {
 
     void initCategory(){
         categories = new ArrayList<>();
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
-        categories.add(new Category("Walking shoes","https://tutorials.mianasad.com/ecommerce/uploads/category/1683204743625.png","#9d4c3d","Best sneakers for walking.",1));
         categoryAdapter = new CategoryAdapter(this,categories);
+
+        getCategories();
 
         GridLayoutManager layoutManager = new GridLayoutManager(this,4);
         binding.categoriesList.setLayoutManager(layoutManager);
         binding.categoriesList.setAdapter(categoryAdapter);
     }
 
+    void getCategories(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        @SuppressLint("NotifyDataSetChanged") StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, response -> {
+            try {
+                JSONObject mainObj = new JSONObject(response);
+                if (mainObj.getString("status").equals("success")){
+                    JSONArray categoriesArray = mainObj.getJSONArray("categories");
+                    for (int i = 0; i <categoriesArray.length(); i++) {
+                        JSONObject obj = categoriesArray.getJSONObject(i);
+                        Category category = new Category(
+                                obj.getString("name"),
+                                Constants.CATEGORIES_IMAGE_URL + obj.getString("icon"),
+                                obj.getString("color"),
+                                obj.getString("brief"),
+                                obj.getInt("id")
+                        );
+                        categories.add(category);
+                    }
+                    categoryAdapter.notifyDataSetChanged();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+
+        });
+        queue.add(request);
+    }
+
     void initSlider() {
-        binding.carousel.addData(new CarouselItem("https://tutorials.mianasad.com/ecommerce/uploads/news/mens%20offers.jpg","sales offer for men"));
-        binding.carousel.addData(new CarouselItem("https://tutorials.mianasad.com/ecommerce/uploads/news/summer%20sales%20offer.jpg","summer season"));
-        binding.carousel.addData(new CarouselItem("https://tutorials.mianasad.com/ecommerce/uploads/news/summer%20sales%20offer.jpg","summer season"));
+        getRecentOffers();
+    }
+
+    void getRecentOffers() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL,
+            (Response.Listener<String>) response -> {
+                try {
+                    JSONObject mainObj = new JSONObject(response);
+                    if (mainObj.getString("status").equals("success")){
+                        JSONArray offerArray = mainObj.getJSONArray("news_infos");
+                        for (int i = 0; i < offerArray.length(); i++) {
+                            JSONObject childObj = offerArray.getJSONObject(i);
+                            binding.carousel.addData(
+                                    new CarouselItem(
+                                            Constants.NEWS_IMAGE_URL + childObj.getString("image"),
+                                            childObj.getString("title")
+                                    )
+                            );
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, (Response.ErrorListener) error -> {
+
+            });
+        queue.add(stringRequest);
     }
 
     void initProducts(){
         products = new ArrayList<>();
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
-        products.add(new Product("Himalayan Face Wash","https://tutorials.mianasad.com/ecommerce/uploads/product/1683270685719.jpg","READY STOCK",12,12,1,1));
         productAdapter = new ProductAdapter(this,products);
+
+        getProducts();
 
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         binding.productList.setLayoutManager(layoutManager);
         binding.productList.setAdapter(productAdapter);
     }
+
+    void getProducts(){
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url = Constants.GET_PRODUCTS_URL + "?count=40";
+            @SuppressLint("NotifyDataSetChanged") StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+                try {
+                    JSONObject Obj = new JSONObject(response);
+                    if (Obj.getString("status").equals("success")){
+                        JSONArray productsArray = Obj.getJSONArray("products");
+                        for (int i = 0; i < productsArray.length(); i++) {
+                            JSONObject childObj = productsArray.getJSONObject(i);
+                            Product product = new Product(
+                                    childObj.getString("name"),
+                                    Constants.PRODUCTS_IMAGE_URL+childObj.getString("image"),
+                                    childObj.getString("status"),
+                                    childObj.getDouble("price"),
+                                    childObj.getDouble("price_discount"),
+                                    childObj.getInt("stock"),
+                                    childObj.getInt("id")
+                            );
+                            products.add(product);
+                        }
+                        productAdapter.notifyDataSetChanged();
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }, error -> {
+
+            });
+            queue.add(request);
+        }
 
 }
