@@ -1,6 +1,7 @@
 package com.example.bazaarkari.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +57,7 @@ public class CartAct extends AppCompatActivity {
 
         binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
 
+        binding.continueBtn.setOnClickListener(view -> startActivity(new Intent(this,CheackOutAct.class)));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
