@@ -4,6 +4,7 @@ public class Product {
     private String name,image,status;
     private double price,discount;
     private int stock,id;
+    private int quantity;
 
     public Product(String name, String image, String status, double price, double discount, int stock, int id) {
         this.name = name;
@@ -69,5 +70,14 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

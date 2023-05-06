@@ -1,6 +1,7 @@
 package com.example.bazaarkari.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bazaarkari.R;
+import com.example.bazaarkari.activities.ProductDetails;
 import com.example.bazaarkari.databinding.ItemProductBinding;
 import com.example.bazaarkari.model.Product;
 
@@ -39,6 +41,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
         holder.binding.productPrice.setText("BDT "+product.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductDetails.class);
+                intent.putExtra("name",product.getName());
+                intent.putExtra("image",product.getImage());
+                intent.putExtra("id",product.getId());
+                intent.putExtra("price",product.getPrice());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

@@ -24,4 +24,8 @@
     <string name="additional_comments">Additional Comments</string>
     <string name="product_order_list">Product Order List</string>
     <string name="process_checkout">Process Checkout</string>
+    <string name="continue2">Continue</string>
+    <string name="dash">-</string>
+    <string name="one">1</string>
+    <string name="plus">+</string>
 </resources>
