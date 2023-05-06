@@ -47,7 +47,7 @@ public class ProductDetails extends AppCompatActivity {
 
     private void setListener() {
         binding.backBtn.setOnClickListener(view -> onBackPressed());
-        binding.addToCartIcon.setOnClickListener(view -> startActivity(new Intent(this,Cart.class)));
+        binding.addToCartIcon.setOnClickListener(view -> startActivity(new Intent(this,CartAct.class)));
     }
 
     void getProductDetails(int id){

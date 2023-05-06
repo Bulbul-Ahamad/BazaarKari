@@ -14,7 +14,7 @@ import com.example.bazaarkari.model.Product;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Cart extends AppCompatActivity {
+public class CartAct extends AppCompatActivity {
 
     ActivityCartBinding binding;
     CartAdapter cartAdapter;
