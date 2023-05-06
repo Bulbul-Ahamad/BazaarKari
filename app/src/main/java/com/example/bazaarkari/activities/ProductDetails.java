@@ -1,8 +1,10 @@
 package com.example.bazaarkari.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +13,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bazaarkari.R;
 import com.example.bazaarkari.databinding.ActivityProductDetailsBinding;
+import com.example.bazaarkari.model.Product;
 import com.example.bazaarkari.utils.Constants;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.util.TinyCartHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +26,7 @@ import org.json.JSONObject;
 public class ProductDetails extends AppCompatActivity {
 
     ActivityProductDetailsBinding binding;
+    Product currentProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +45,19 @@ public class ProductDetails extends AppCompatActivity {
 
         getProductDetails(id);
         binding.productName.setText(name);
-        binding.productPrice.setText("BDT "+price);
+        binding.productPrice.setText(String.format("BDT %.2f",price));
         binding.productNameTop.setText(name);
 
+        Cart cart = TinyCartHelper.getCart();
+        binding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
+                cart.addItem(currentProduct,1);
+                binding.addToCartBtn.setClickable(false);
+                binding.addToCartBtn.setBackgroundColor(R.color.white);
+            }
+        });
         setListener();
 
     }
@@ -62,6 +79,15 @@ public class ProductDetails extends AppCompatActivity {
                             String description = product.getString("description");
                             binding.productDescription.setText(
                                     Html.fromHtml(description)
+                            );
+                            currentProduct =new Product(
+                                    product.getString("name"),
+                                    Constants.PRODUCTS_IMAGE_URL+product.getString("image"),
+                                    product.getString("status"),
+                                    product.getDouble("price"),
+                                    product.getDouble("price_discount"),
+                                    product.getInt("stock"),
+                                    product.getInt("id")
                             );
                         }
                     } catch (JSONException e) {

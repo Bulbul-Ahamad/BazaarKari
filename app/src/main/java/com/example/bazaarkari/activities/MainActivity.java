@@ -1,6 +1,7 @@
 package com.example.bazaarkari.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.addToCartIcon.setOnClickListener(view -> startActivity(new Intent(this,CartAct.class)));
 
         initCategory();
         initProducts();
