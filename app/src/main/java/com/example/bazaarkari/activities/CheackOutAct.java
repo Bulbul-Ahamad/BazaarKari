@@ -1,22 +1,19 @@
 package com.example.bazaarkari.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bazaarkari.adapters.CartAdapter;
 import com.example.bazaarkari.databinding.ActivityCheackOutBinding;
@@ -80,7 +77,18 @@ public class CheackOutAct extends AppCompatActivity {
         binding.total.setText(String.format("BDT %.2f",totalPrice));
 
         binding.checkoutBtn.setOnClickListener(view -> {
-            processOrder();
+            if (binding.nameBox.getText().toString().equals("")){
+                Toast.makeText(this, "Please Enter Your Name !", Toast.LENGTH_SHORT).show();
+            }else if (binding.emailBox.getText().toString().equals("")){
+                Toast.makeText(this, "Please Enter Your Email !", Toast.LENGTH_SHORT).show();
+            }else if (binding.phoneBox.getText().toString().equals("")){
+                Toast.makeText(this, "Please Enter Your Phone Number !", Toast.LENGTH_SHORT).show();
+            }else if (binding.addressBox.getText().toString().equals("")){
+                Toast.makeText(this, "Please Enter Your Address !", Toast.LENGTH_SHORT).show();
+            }else if (binding.dateBox.getText().toString().equals("")){
+                Toast.makeText(this, "Please Enter Your Shipping Date !", Toast.LENGTH_SHORT).show();
+            }else
+                processOrder();
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

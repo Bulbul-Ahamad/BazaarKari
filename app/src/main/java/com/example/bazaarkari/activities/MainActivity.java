@@ -18,6 +18,7 @@ import com.example.bazaarkari.databinding.ActivityMainBinding;
 import com.example.bazaarkari.model.Category;
 import com.example.bazaarkari.model.Product;
 import com.example.bazaarkari.utils.Constants;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 import org.json.JSONArray;
@@ -41,6 +42,24 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
+
+            }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                intent.putExtra("query", text.toString());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+
+            }
+        });
         binding.addToCartIcon.setOnClickListener(view -> startActivity(new Intent(this,CartAct.class)));
 
         initCategory();
