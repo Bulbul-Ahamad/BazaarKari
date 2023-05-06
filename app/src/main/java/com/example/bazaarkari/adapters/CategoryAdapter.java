@@ -1,6 +1,7 @@
 package com.example.bazaarkari.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bazaarkari.R;
+import com.example.bazaarkari.activities.CategoryActivity;
 import com.example.bazaarkari.databinding.ItemCatagoriesBinding;
 import com.example.bazaarkari.model.Category;
 
@@ -42,6 +44,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 .load(category.getIcon())
                 .into(holder.binding.image);
         holder.binding.image.setBackgroundColor(Color.parseColor(category.getColor()));
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, CategoryActivity.class);
+            intent.putExtra("catId",category.getId());
+            intent.putExtra("categoryName",category.getName());
+            context.startActivity(intent);
+        });
     }
 
     @Override
