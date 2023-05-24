@@ -7,7 +7,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="@dimen/_190sdp"
-        app:cardBackgroundColor="@color/primary"
+        app:cardBackgroundColor="@color/background"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_2sdp"
         app:cardUseCompatPadding="true"
@@ -46,9 +46,10 @@
                     android:maxLines="2"
                     android:text="@string/textview"
                     android:layout_alignParentTop="true"
-                    android:textColor="@color/background"
+                    android:textColor="@color/primary_text"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold" />
+
 
                 <TextView
                     android:id="@+id/productPrice"
@@ -60,7 +61,7 @@
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:text="@string/bdt_200"
                     android:layout_alignParentBottom="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/primary_text"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
 
