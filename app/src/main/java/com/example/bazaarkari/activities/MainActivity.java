@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,6 +20,8 @@ import com.example.bazaarkari.databinding.ActivityMainBinding;
 import com.example.bazaarkari.model.Category;
 import com.example.bazaarkari.model.Product;
 import com.example.bazaarkari.utils.Constants;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.util.TinyCartHelper;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
