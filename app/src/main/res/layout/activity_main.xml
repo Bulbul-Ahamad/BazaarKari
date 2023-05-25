@@ -68,7 +68,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary"
+                android:backgroundTint="@color/background"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_3sdp">
